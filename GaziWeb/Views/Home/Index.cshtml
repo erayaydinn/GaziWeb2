@@ -1,0 +1,57 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<style>
+    .center {
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+        display: block;
+        overflow-y: hidden;
+    }
+    .news-card {
+        width: 530px;
+        box-shadow: 0px 0px 5px 5px #808080;
+        margin: 16px;
+        border: 1px solid black;
+    }
+    .title {
+        display: flex;
+        text-align: center;
+        border-bottom: 1px solid black;
+        width: 530px;
+    }
+    .image-area {
+        width: 530px;
+    }
+</style>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <div class="center">
+        <h1>Haberler</h1>
+        @{ 
+            if (Model != null)
+            {
+                foreach (var data in Model)
+                {
+                    <div class="news-card">
+                        <img width="528" src="@data.ImageLink"/>
+                        <h3 class="title">
+                            @data.Title
+                        </h3>
+                        <div>
+                            @data.Explanation
+                        </div>
+                    </div>
+                }
+            }
+        }
+    </div>
+} else
+            {
+                <div style="display: flex; justify-content: center; align-items: center; height: 500px">
+                    İçerikleri görebilmek için giriş yapınız. 
+                </div>
+            }
